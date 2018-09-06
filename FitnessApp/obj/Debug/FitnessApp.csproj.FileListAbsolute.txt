@@ -1,0 +1,9 @@
+c:\users\alan\source\repos\FitnessApp\FitnessApp\bin\Debug\FitnessApp.exe.config
+c:\users\alan\source\repos\FitnessApp\FitnessApp\bin\Debug\FitnessApp.exe
+c:\users\alan\source\repos\FitnessApp\FitnessApp\bin\Debug\FitnessApp.pdb
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csprojAssemblyReference.cache
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.Properties.Resources.resources
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csproj.GenerateResource.cache
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csproj.CoreCompileInputs.cache
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.exe
+c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.pdb
