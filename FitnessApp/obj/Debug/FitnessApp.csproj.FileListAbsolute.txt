@@ -7,3 +7,6 @@ c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csproj.Gen
 c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csproj.CoreCompileInputs.cache
 c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.exe
 c:\users\alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.pdb
+C:\Users\Alan\source\repos\FitnessApp\FitnessApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alan\source\repos\FitnessApp\FitnessApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Alan\source\repos\FitnessApp\FitnessApp\obj\Debug\FitnessApp.csproj.CopyComplete
