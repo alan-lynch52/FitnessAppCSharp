@@ -43,7 +43,7 @@ namespace FitnessApp
         public bool CreateBodyweightRecord(double weight) {
             try {
                 if (!(weight <= 0.0)) {
-                    int id = dc.GenerateID(DatabaseController.BODYWEIGHT_RECORD);
+                    int id = dc.GenerateID(DatabaseController.BODYWEIGHT_RECORD_LIST);
                     BodyweightRecord bwr = new BodyweightRecord(id,weight,DateTime.Now);
                     if (dc.AddRecord(DatabaseController.BODYWEIGHT_RECORD,bwr)) { return true; }
                 }
@@ -53,7 +53,7 @@ namespace FitnessApp
         public bool CreateCalorieRecord(int calories) {
             try {
                 if (!(calories <= 0)) {
-                    int id = dc.GenerateID(DatabaseController.CALORIE_RECORD);
+                    int id = dc.GenerateID(DatabaseController.CALORIE_RECORD_LIST);
                     CalorieRecord cr = new CalorieRecord(id,calories,DateTime.Now);
                     if (dc.AddRecord(DatabaseController.CALORIE_RECORD, cr)) { return true; }
                 }
@@ -63,7 +63,7 @@ namespace FitnessApp
         public bool CreateExercise(string name) {
             try {
                 if (name != "") {
-                    int id = dc.GenerateID(DatabaseController.EXERCISE);
+                    int id = dc.GenerateID(DatabaseController.EXERCISE_LIST);
                     if (id == -1) { return false; }
                     Exercise ex = new Exercise(id, name, DateTime.Now);
                     if (dc.AddRecord(DatabaseController.EXERCISE, ex)) { return true; }
@@ -76,9 +76,10 @@ namespace FitnessApp
                 if (exName != "" && !(weight<0.0)) {
                     int exID = dc.GetID(DatabaseController.EXERCISE,exName);
                     if (exID == -1) { return false; }
-                    int id = dc.GenerateID(DatabaseController.EXERCISE_RECORD);
+                    int id = dc.GenerateID(DatabaseController.EXERCISE_RECORD_LIST);
                     if (id == -1) { return false; }
                     ExerciseRecord exr = new ExerciseRecord(id,exID,weight,DateTime.Now);
+                    if (dc.AddRecord(DatabaseController.EXERCISE_RECORD,exr)) { return true; }
                 }
             } catch (Exception e) { Console.WriteLine(e.ToString()); }
             return false;
@@ -124,19 +125,34 @@ namespace FitnessApp
         }
 
         public double[] GetBWRWeightList() {
-            BodyweightRecord[] bwrList = dc.GetBodyweightRecordList();
-            double[] list = new double[bwrList.Length];
-            for (int i = 0; i < bwrList.Length; i++) {
-                list[i] = bwrList[i].getWeight();
+            try
+            {
+                BodyweightRecord[] bwrList = dc.GetBodyweightRecordList();
+                double[] list = new double[bwrList.Length];
+                for (int i = 0; i < bwrList.Length; i++)
+                {
+                    list[i] = bwrList[i].getWeight();
 
+                }
+                return list;
             }
-            return list;
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
+            return new double[0];
         }
         public object[] GetBodyWeightRecordList() {
-            return dc.GetBodyweightRecordList();
+            try
+            {
+                return dc.GetBodyweightRecordList();
+            }
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
+            return new object[0];
         }
         public object[] GetCalorieRecordList() {
-            return dc.GetCalorieRecordList();
+            try
+            {
+                return dc.GetCalorieRecordList();
+            }catch(Exception e){ Console.WriteLine(e.ToString()); }
+            return new object[0];
         }
 
         public int GetDailyCalories(DateTime d) {
@@ -150,16 +166,17 @@ namespace FitnessApp
         }
 
         public double[] GetERWeightList(string name) {
-            int index = 0;
-            Exercise[] exList = dc.GetExerciseList();
-            for (int i = 0; i < exList.Length; i++) {
-                string curExName = exList[i].getName();
-                if (curExName == name) {
-                    index = i;
-                    break;
+            try
+            {
+                int index = 0;
+                Exercise[] exList = dc.GetExerciseList();
+                for (int i = 0; i < exList.Length; i++) {
+                    string curExName = exList[i].getName();
+                    if (curExName == name) {
+                        index = i;
+                        break;
+                    }
                 }
-            }
-            try {
                 int exID = exList[index].getId();
                 ExerciseRecord[] exrList = dc.GetExerciseRecordList(exID);
                 double[] weights = new double[exrList.Length];
@@ -171,27 +188,45 @@ namespace FitnessApp
             return new double[0];
         }
         public string[] GetExerciseNameList() {
-            Exercise[] exList = dc.GetExerciseList();
-            string[] names = new string[exList.Length];
-            for(int i = 0; i < exList.Length; i++) {
-                names[i] = exList[i].getName();
+            try
+            {
+                Exercise[] exList = dc.GetExerciseList();
+                foreach (Exercise e in exList) { Console.WriteLine(e.getName()); }
+                string[] names = new string[exList.Length];
+                if (names.Length == 0) { return names; }
+                Console.WriteLine(exList.Length);
+                Console.WriteLine(names.Length);
+                for (int i = 0; i < exList.Length; i++)
+                {
+                    Console.WriteLine(i);
+                    names[i] = exList[i].getName();
+                }
+                return names;
             }
-            return names;
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
+            return new string[0];
         }
 
         public object[] GetExerciseRecordList(string name) {
-            int index = 0;
-            Exercise[] exList = dc.GetExerciseList();
-            for (int i = 0; i < exList.Length; i++) {
-                string curExName = exList[i].getName();
-                if (curExName == name) {
-                    index = i;
-                    break;
+            try
+            {
+                int index = 0;
+                Exercise[] exList = dc.GetExerciseList();
+                for (int i = 0; i < exList.Length; i++)
+                {
+                    string curExName = exList[i].getName();
+                    if (curExName == name)
+                    {
+                        index = i;
+                        break;
+                    }
                 }
+                int exID = exList[index].getId();
+                ExerciseRecord[] exrList = dc.GetExerciseRecordList(exID);
+                return exrList;
             }
-            int exID = exList[index].getId();
-            ExerciseRecord[] exrList = dc.GetExerciseRecordList(exID);
-            return exrList;
+            catch (Exception e) { Console.WriteLine(e.ToString()); }
+            return new object[0];
         }
     }
 }

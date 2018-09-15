@@ -270,6 +270,7 @@ namespace FitnessApp
         //NEEDS TESTING
         public int GetID(string rType, string name) {
             try {
+                name = name.Replace(" ","&");
                 string getUrl = "/getID/" + username + "/" + password + "/" + name + "/" + rType;
                 HttpWebRequest req = establishRequest(getUrl, WebRequestMethods.Http.Get);
                 HttpWebResponse res = (HttpWebResponse)req.GetResponse();
@@ -288,6 +289,7 @@ namespace FitnessApp
             if (list == null) { return new Exercise[0]; }
             Exercise[] exList = new Exercise[list.Length];
             for (int i = 0; i < list.Length; i++) {
+                Console.WriteLine(exList[i]);
                 exList[i] = (Exercise)list[i];
             }
             return exList;
@@ -346,6 +348,7 @@ namespace FitnessApp
                 if (resolveStatusCode(res)) {
                     string data = getResponseData(res);
                     JArray jData = JArray.Parse(data);
+                    Console.WriteLine(jData);
                     object[] recordArray = JArrayToObjectArray(jData,rList);
                     return recordArray;
                 }
@@ -361,6 +364,7 @@ namespace FitnessApp
                 if (resolveStatusCode(res)) {
                     string data = getResponseData(res);
                     JArray jData = JArray.Parse(data);
+                    Console.WriteLine(jData);
                     object[] recordArray = JArrayToObjectArray(jData,rListType);
                     return recordArray;
                 }
@@ -375,6 +379,7 @@ namespace FitnessApp
                 if (resolveStatusCode(res)) {
                     string data = getResponseData(res);
                     JArray jData = JArray.Parse(data);
+                    Console.WriteLine(jData);
                     object[] recordArray = JArrayToObjectArray(jData,rListType);
                     return recordArray;
                 }
@@ -382,8 +387,10 @@ namespace FitnessApp
             return new object[0];
         }
         private object[] JArrayToObjectArray(JArray arr,string rList) {
+            Console.WriteLine("Method: JArrayToObjectArray");
             try {
                 object[] objArr = new object[arr.Count];
+                Console.WriteLine(arr.Count);
                 for (int i = 0; i < objArr.Length; i++) {
                     JObject jObj = (JObject)arr.Children().ElementAt(i);
                     
@@ -410,28 +417,28 @@ namespace FitnessApp
                             double bWeight = (double)jObj.GetValue("weight");
                             break;
                     }
-                    return objArr;
                 }
+                return objArr;
             } catch (Exception e) { Console.WriteLine(e.ToString()); }
             return new object[0];
         }
 
-        static void Main() {
-            DatabaseController dc = new DatabaseController();
-            //Trace.Assert(dc.AddUser("test1","pass"),"Failed to add user!");
-            bool loggedIn = dc.Login("user1","p123");
-            Trace.Assert(loggedIn == true,"Failed to login");
-            //Trace.Assert(dc.UpdatePassword("pass","pass"),"Failed to update password");
-            //Trace.Assert(dc.RemoveUser(),"Failed to remove user");
-            //Exercise ex = new Exercise(1,"Dumbell Shrug",DateTime.Now);
-            //Trace.Assert(dc.AddRecord(EXERCISE,ex),"Failed to add record");
-            //ex.setName("Shoulder Press");
-            //Trace.Assert(dc.EditRecord(EXERCISE,ex),"Failed to edit record");
-            //Trace.Assert(dc.DeleteRecord(EXERCISE,ex),"Failed to remove record");
-            Trace.Assert(dc.GetExerciseList().Length != 0,"Exercise list length should be greater than 0");
-            Trace.Assert(dc.GetExerciseRecordList().Length != 0, "Exercise Record list length should be greater than 0");
-            Trace.Assert(dc.GetBodyweightRecordList().Length != 0, "Bodyweight record list should be greater than 0");
-        }
+        //static void Main() {
+        //    DatabaseController dc = new DatabaseController();
+        //    //Trace.Assert(dc.AddUser("test1","pass"),"Failed to add user!");
+        //    bool loggedIn = dc.Login("user1","p123");
+        //    Trace.Assert(loggedIn == true,"Failed to login");
+        //    //Trace.Assert(dc.UpdatePassword("pass","pass"),"Failed to update password");
+        //    //Trace.Assert(dc.RemoveUser(),"Failed to remove user");
+        //    //Exercise ex = new Exercise(1,"Dumbell Shrug",DateTime.Now);
+        //    //Trace.Assert(dc.AddRecord(EXERCISE,ex),"Failed to add record");
+        //    //ex.setName("Shoulder Press");
+        //    //Trace.Assert(dc.EditRecord(EXERCISE,ex),"Failed to edit record");
+        //    //Trace.Assert(dc.DeleteRecord(EXERCISE,ex),"Failed to remove record");
+        //    Trace.Assert(dc.GetExerciseList().Length != 0,"Exercise list length should be greater than 0");
+        //    Trace.Assert(dc.GetExerciseRecordList().Length != 0, "Exercise Record list length should be greater than 0");
+        //    Trace.Assert(dc.GetBodyweightRecordList().Length != 0, "Bodyweight record list should be greater than 0");
+        //}
     }
     
 }

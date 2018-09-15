@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FitnessApp
 {
-    public partial class Form1 : Form
+    public partial class CalorieRecordForm : Form
     {
-        public Form1()
+        public CalorieRecordForm()
         {
             InitializeComponent();
         }
